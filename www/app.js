@@ -119,6 +119,23 @@ module
             }
         }
     });
+    $routeProvider.when("/list/ngiscroll", {
+        templateUrl: 'partials/list-ngiscroll.html',
+        animation: 'page-slide',
+        controller: ['$scope', '$timeout', listNgiscrollCtrl],
+        resolve: {
+            delay: function($q, $timeout, $loadDialog) {
+                var delay = $q.defer();
+                $loadDialog.setTheme('a').show('Loading...');
+                $timeout(function(){
+                    delay.resolve();
+                    $loadDialog.hide();
+                }, 1000);
+                // return delay.promise;
+                return delay.promise;
+            }
+        }
+    });
     $routeProvider.when("/dialog", {
         templateUrl: 'partials/dialog.html',
         animation: 'page-slidedown'
@@ -595,6 +612,22 @@ function listFilterCtrl($scope, $timeout){
         // var myScroll = new IScroll('.ui-content', {scrollX: false, scrollbars: 'default'});
         var myScroll = new IScroll('.ui-content', {scrollbars: true, mouseWheel: true, interactiveScrollbars: true});
     },1000);
+}
+
+function listNgiscrollCtrl($scope, $timeout){
+     $scope.$parent.myScrollOptions = {
+        snap: false,
+        onScrollEnd: function ()
+        {
+            alert('finshed scrolling');
+        }
+    };
+
+    // expose refreshiScroll() function for ng-onclick or other meth
+    $scope.refreshiScroll = function ()
+    {
+        $scope.$parent.myScroll['wrapper'].refresh();
+    };
 }
 
 // angular ngTouch
