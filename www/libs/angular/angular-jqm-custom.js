@@ -640,13 +640,14 @@
 	        link: function(scope, element, attr, iscrollableCtrl){
 	            
 	            var iscrollModel = $parse(attr.iscroll);
+	            var wrapper = attr.iscroll;
 
 		        if (!iscrollModel.assign) {
 		            throw new Error("iscroll expected assignable expression for iscroll attribute, got '" + attr.jqmSelectMenu + "'");
 		        }
 		        iscrollModel.assign(scope.$parent, scope);
 
-	            attr.$set('id', attr.iscroll);
+	            attr.$set('id', wrapper);
 
 	            scope.scrollerClass  	   = isDef(attr.scrollerClass) ? attr.scrollerClass : 'scroller' ;
 	            scope.scrollerContentClass = isDef(attr.scrollerContentClass) ? attr.scrollerContentClass : 'ui-scroller-content' ;
@@ -662,7 +663,9 @@
 	                hScrollbar    : isDef(attr.horizontal) ? attr.horizontal==='true' : false,
 	                onBeforeScrollStart : function(e) {
 				        var target = e.target;
+				        
 						while (target.nodeType != 1) target = target.parentNode;
+				        console.log(target.tagName);
 
 						if (target.tagName != 'SELECT' && target.tagName != 'INPUT' && target.tagName != 'TEXTAREA')
 							e.preventDefault();
@@ -680,10 +683,6 @@
 	            if( isDef(attr.onZoomStart) ) angular.extend(options, {onZoomStart:scope.onZoomStart});
 	            if( isDef(attr.onZoom) ) angular.extend(options, {onZoom:scope.onZoom});
 	            if( isDef(attr.onZoomEnd) ) angular.extend(options, {onZoomEnd:scope.onZoomEnd});
-
-	            var iscroll = new iScroll(element[0]);
-
-	            scope.iscroll = iscroll;
 
 	            function iscrollOnLoad(){
 	            
@@ -741,14 +740,18 @@
 	                	angular.extend(options, refreshOption);
 	            	}
 
-				    console.log(attr.iscroll, 'iscroll options', options)
+				    // console.log(attr.iscroll, 'iscroll options', options)
 
-	                angular.extend(iscroll.options, options);
+		            var iscroll = new iScroll(wrapper, options);
 
-	                iscroll.refresh();
+		            scope.iscroll = iscroll;
+
+	                scope.iscroll.refresh();
+
+	                // angular.extend(iscroll.options, options);
 	            };
 
-	            $timeout(iscrollOnLoad, 800);
+	            $timeout(iscrollOnLoad);
 	        }
 	    }
 

@@ -4,7 +4,7 @@ document.addEventListener('touchmove', function (e) {
 }, false);
 function doOnOrientationChange(){
     docWidth = document.width;
-    console.log(window.orientation, docWidth)
+    console.log(window.orientation, docWidth);
 }
 window.addEventListener('orientationchange', doOnOrientationChange);
 // Initial execution if needed
