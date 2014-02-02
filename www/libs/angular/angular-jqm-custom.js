@@ -683,8 +683,8 @@
 	            if( isDef(attr.onZoomEnd) ) angular.extend(options, {onZoomEnd:scope.onZoomEnd});
 
 	            iscroll && iscroll.destroy();
-	            
-	            iscroll = new iScroll(element[0]);
+
+	            iscroll = new iScroll(attr.iscroll);
 
 	            scope.iscroll = iscroll;
 
@@ -750,8 +750,10 @@
 
 	                scope.iscroll.refresh();
 	            };
+	            
+	            angular.extend(scope.iscroll.options, options);
 
-	            $timeout(iscrollOnLoad, 1000);
+	            $timeout(function(){ scope.iscroll.refresh() });
 	        }
 	    }
 
