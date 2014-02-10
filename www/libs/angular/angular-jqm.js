@@ -1265,7 +1265,7 @@ jqmModule.directive('jqmLiActive', [function() {
 </example>
  */
 var iscroll = null;
-jqmModule.directive('jqmListview', [function() {
+jqmModule.directive('jqmListview', ['$rootScope', function($rootScope) {
     var isdef = angular.isDefined;
     return {
         restrict: 'A',
@@ -1282,13 +1282,26 @@ jqmModule.directive('jqmListview', [function() {
             scope.shadow  = isdef(attr.shadow) ? (attr.shadow==='true') : true;
             scope.corners = isdef(attr.corners) ? (attr.corners==='true') : true;
 
-            setTimeout(function() {
-                console.info('iscroll')
-                if( iscrollCtrl ){
-                    iscrollCtrl.scope.onLoad();
-                }
-            }, 1000);
+            // console.info('jqmListview directive', element.parent()[0])
 
+            $rootScope.$on('LastElem', function(event){
+                console.info('iscroll on load');
+                if( iscrollCtrl !== undefined ){
+                    setTimeout(function() {
+                        iscrollCtrl.scope.onLoad();
+                    }, 800);
+                }
+            });
+        }
+    };
+}]);
+jqmModule.directive('myRepeatDirective', ['$rootScope', function($rootScope) {
+    return {
+        restrict: 'A',
+        link: function(scope, element, attrs) {
+            if (scope.$parent.$last){
+                $rootScope.$emit('LastElem');
+            }
         }
     };
 }]);

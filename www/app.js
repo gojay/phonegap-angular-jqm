@@ -4,7 +4,6 @@ document.addEventListener('touchmove', function (e) {
 }, false);
 function doOnOrientationChange(){
     docWidth = document.width;
-    console.log(window.orientation, docWidth);
 }
 window.addEventListener('orientationchange', doOnOrientationChange);
 // Initial execution if needed
@@ -46,7 +45,6 @@ module
                     delay.resolve();
                     $loadDialog.hide();
                 }, 1000);
-                // return delay.promise;
                 return delay.promise;
             }
         }
@@ -63,7 +61,6 @@ module
                     delay.resolve();
                     $loadDialog.hide();
                 }, 1000);
-                // return delay.promise;
                 return delay.promise;
             }
         }
@@ -80,7 +77,6 @@ module
                     delay.resolve();
                     $loadDialog.hide();
                 }, 1000);
-                // return delay.promise;
                 return delay.promise;
             }
         }
@@ -97,7 +93,6 @@ module
                     delay.resolve();
                     $loadDialog.hide();
                 }, 1000);
-                // return delay.promise;
                 return delay.promise;
             }
         }
@@ -114,7 +109,6 @@ module
                     delay.resolve();
                     $loadDialog.hide();
                 }, 1000);
-                // return delay.promise;
                 return delay.promise;
             }
         }
@@ -131,7 +125,6 @@ module
                     delay.resolve();
                     $loadDialog.hide();
                 }, 1000);
-                // return delay.promise;
                 return delay.promise;
             }
         }
@@ -205,7 +198,7 @@ function MainCtrl($scope){
 function ListCtrl(scope, $timeout, $compile){
     scope.state = {};
     scope.data = [];
-    addData(50);
+    addData(20);
     function addData(until){
         for(var i = 1; i <= until; i++) {
             scope.data.push(i);

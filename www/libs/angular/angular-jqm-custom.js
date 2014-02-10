@@ -750,6 +750,7 @@
 
 		            scope.iscroll = iscroll;
 
+		            console.log('iscroll refresh')
 	                scope.iscroll.refresh();
 
 	            };
