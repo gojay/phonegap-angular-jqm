@@ -613,6 +613,8 @@
 		}
 	}]);
 
+	var iscroll = null;
+
 	jqmModuleCustom.directive('iscroll', ['$parse', '$timeout',  function ($parse, $timeout) {
 	    var isDef = angular.isDefined;
 	    return {
@@ -651,8 +653,8 @@
 
 	            scope.scrollerClass  	   = isDef(attr.scrollerClass) ? attr.scrollerClass : 'scroller' ;
 	            scope.scrollerContentClass = isDef(attr.scrollerContentClass) ? attr.scrollerContentClass : 'ui-scroller-content' ;
-	            scope.pullRefresh 		   = isDef(attr.pullRefresh) ? attr.pullRefresh==="true" : false ;
-	            scope.infinite 		       = isDef(attr.infinite) ? attr.infinite==="true" : false ;
+	            scope.pullRefresh 		   = isDef(attr.pullRefresh) ? attr.pullRefresh === "true" : false ;
+	            scope.infinite 		       = isDef(attr.infinite) ? attr.infinite === "true" : false ;
 
 	            var options = {
 	                bounce        : isDef(attr.bounce)     ? attr.bounce==='true' : false,
@@ -665,7 +667,7 @@
 				        var target = e.target;
 				        
 						while (target.nodeType != 1) target = target.parentNode;
-				        console.log(target.tagName);
+				        // console.log(target.tagName);
 
 						if (target.tagName != 'SELECT' && target.tagName != 'INPUT' && target.tagName != 'TEXTAREA')
 							e.preventDefault();
@@ -684,7 +686,9 @@
 	            if( isDef(attr.onZoom) ) angular.extend(options, {onZoom:scope.onZoom});
 	            if( isDef(attr.onZoomEnd) ) angular.extend(options, {onZoomEnd:scope.onZoomEnd});
 
-	            function iscrollOnLoad(){
+	            scope.onLoad = function iscrollOnLoad(){
+
+	            	// console.info('iscroll On Load');
 	            
 	            	if( scope.pullRefresh && isDef(attr.pullDown) && isDef(attr.pullUp) ){
 	            		var scrollerEl = angular.element(element);
@@ -740,18 +744,17 @@
 	                	angular.extend(options, refreshOption);
 	            	}
 
-				    // console.log(attr.iscroll, 'iscroll options', options)
+				    iscroll && iscroll.destroy();
 
-		            var iscroll = new iScroll(wrapper, options);
+		            iscroll = new iScroll(wrapper, options);
 
 		            scope.iscroll = iscroll;
 
 	                scope.iscroll.refresh();
 
-	                // angular.extend(iscroll.options, options);
 	            };
 
-	            $timeout(iscrollOnLoad);
+	            // $timeout(iscrollOnLoad, 1000);
 	        }
 	    }
 
