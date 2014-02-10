@@ -1282,12 +1282,12 @@ jqmModule.directive('jqmListview', [function() {
             scope.shadow  = isdef(attr.shadow) ? (attr.shadow==='true') : true;
             scope.corners = isdef(attr.corners) ? (attr.corners==='true') : true;
 
-            $timeout(function() {
+            setTimeout(function() {
+                console.info('iscroll')
                 if( iscrollCtrl ){
-                    // console.log('iscrollCtrl', iscrollCtrl);
                     iscrollCtrl.scope.onLoad();
                 }
-            });
+            }, 1000);
 
         }
     };
