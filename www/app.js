@@ -40,7 +40,8 @@ module
         resolve: {
             delay: function($q, $timeout, $loadDialog) {
                 var delay = $q.defer();
-                $loadDialog.setTheme('a').show('Loading...');
+                // $loadDialog.setTheme('a').show('Loading...');
+                $loadDialog.show('Loading...');
                 $timeout(function(){
                     delay.resolve();
                     $loadDialog.hide();
